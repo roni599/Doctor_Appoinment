@@ -1,0 +1,17 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.msg-box{
+    height: 40vh;
+    width: 80vh;
+    background-color: rgb(80, 79, 79);
+    margin: 0 auto;
+    margin-top: 25vh;
+    text-align: center;
+    color: white;
+}
+.msg-box a{
+    text-decoration: none;
+    color: white;
+}

@@ -1,0 +1,51 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.login{
+    margin-left: 920px;
+    background-color: rgb(20, 20, 22);
+    color: beige;
+    border-radius: 5px;
+}
+.reg{
+    margin-left: 10px;
+    background-color: rgb(20, 20, 22);
+    color: beige;
+    border-radius: 5px;
+}
+.form-body{
+    height: 568px;
+    width: auto;
+    background-image: url("../photo/Capture.PNG");
+    background-size: cover;
+}
+.body-color{
+    height: 568px;
+    width: auto;
+    background-color: rgba(18, 154, 245, 0.788);
+}
+form{
+    padding-top: 3%;
+}
+.reg-Form{
+    height: 460px;
+    width: 380px;
+    background-color: rgba(0, 0, 0, 0.918);
+    color: white;
+    margin-left: 36%;
+    border-radius: 10px;
+}
+.reg-Form input{
+    margin: 15px 40px;
+    outline: none;
+    border-radius: 5px;
+}
+.reg-Form .gender input{
+    margin: 10px 10px;
+}
+.update-btn a{
+    text-decoration: none;
+    color: white;
+}
+
