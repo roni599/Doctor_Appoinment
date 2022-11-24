@@ -1,9 +1,14 @@
 const { json } = require('body-parser');
 const express = require('express');
 const router = express.Router();
+const session = require('express-session');
+const config = require('../config/config');
+router.use(session({secret:config.sessionSecret}));
 const user = require('../src/model/user');
 const admin = require('../src/model/admin');
 const schedule = require('../src/model/schedule');
+const donor = require('../src/model/donor');
+
 
 
 
@@ -81,6 +86,7 @@ router.post('/userlogin',async(req,res)=>{
             const userEmail = await user.findOne({user_email:email})
 
             if(userEmail.user_password === password){
+                req.session.user_id = userEmail._id;
                 res.redirect('/userhomepage');
             }
             else{
@@ -99,8 +105,16 @@ router.get('/uservalidation', (req, res)=> {
 
 
 //ROUTE TO SHOW USER HOMEPAGE(after userlogin)
-router.get('/userhomepage',(req,res)=>{
-    res.render('userhomepage');
+router.get('/userhomepage',async(req,res)=>{
+    //res.render('userhomepage');
+    try{
+        const userEmail = await user.findById({_id:req.session.user_id});
+        res.render('userhomepage', {user:userEmail});
+    }
+    catch(err){
+        console.log("Error");
+    }
+    
 });
 
 
@@ -280,4 +294,63 @@ router.get('/schedule',(req,res)=>{
         }
     });
 });
+
+
+
+
+//**** Blood part ****/
+router.get('/bloodDonorReg',(req,res)=>{
+    res.render('bloodDonorReg');
+});
+
+
+//ROUTE TO COLLECT Donor DATA FROM REGISTRATION FORM TO DATABASE
+router.post('/sendDonorInfo', (req, res) => {
+    const {donor_name, donor_phone, blood_group, donor_address} = req.body;
+
+    // console.log(donor_name, donor_phone, blood_group, donor_address);
+
+    const donorInfo = new donor({
+        donor_name, 
+        donor_phone, 
+        blood_group, 
+        donor_address
+    });
+    donorInfo.save((err) => {
+        if(err){
+            res.redirect('/error');
+            console.log(err);
+        }
+        else{
+            console.log("Data save successfully");
+            res.redirect('/success');
+        }
+    });
+});
+
+
+//ROUTE TO SHOW SUCCESS MSG(REGISTRATION) FOR Donor
+router.get('/success', (req, res)=> {
+    res.render('msg/successMSG');
+});
+
+
+//ROUTE TO SHOW ERROR MSG(REGISTRATION) FOR Donor
+router.get('/error', (req, res)=> {
+    res.render('msg/errorMSG');
+});
+
+//ROUTE TO SHOW Blood Donor DATA
+router.get('/bloodDonorData',(req,res)=>{
+    donor.find((err, docs) => {
+        if(!err){
+            res.render('bloodDonorlist', {donors: docs});
+        }
+        else{
+            console.log("Error 404 " + err)
+        }
+    });
+
+});
+
 module.exports = router;

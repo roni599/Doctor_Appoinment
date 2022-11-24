@@ -1,0 +1,19 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.content-body{
+    display: flex;
+}
+.left-side{
+    height: 100vh;
+    width: 25%;
+    background: linear-gradient(to right, #0680a8 0%, #99d6ff 100%);
+    text-align: center;
+    padding-top: 30vh;
+}
+.right-side{
+    height: 100vh;
+    width: 75%;
+    background-color: white;
+}
