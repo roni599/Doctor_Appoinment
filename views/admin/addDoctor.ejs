@@ -21,10 +21,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav">
-                        <a class="nav-link active" aria-current="page" href="/">Home</a>
-                        <a class="nav-link" href="#">About us</a>
-                        <a class="nav-link login" href="/login">Login</a>
-                        <a class="nav-link reg" href="/registration">Register</a>
+                        <a class="nav-link active" aria-current="page" href="/userdata">Home</a>
                     </div>
                 </div>
             </div>
@@ -33,15 +30,14 @@
 
     <div class="form-body">
         <div class="body-color">
-            <form action="/send" method="post" autocomplete="off">
+            <form action="/addDoctor" method="post" autocomplete="off">
                 <div class="reg-Form">
-                    <h3 style="text-align: center; padding-top: 10px;"> <u>Registration Form</u></h3>
-                    <input type="text" placeholder="Username" name="user_name" size="36" required> <br>
-                    <input type="text" placeholder="Phone" name="user_phone" size="36" required> <br>
-                    <input type="email" placeholder="example@gmail.com" name="user_email" size="36" required> <br>
-                    <input type="password" placeholder="Password" name="user_password" size="36" required> <br>
-                    <input type="text" placeholder="Address" name="user_address" size="36" required> <br>
-                    <input type="text" placeholder="Doctor Name" name="doctor_name" size="36" required> <br>
+                    <h3 style="text-align: center; padding-top: 10px; padding-bottom: 20px;"> <u>Add Doctor</u></h3>
+                    <input type="text" placeholder="Doctor name" name="doctor_name" size="36" required> <br>
+                    <input type="text" placeholder="Phone" name="doctor_phone" size="36" required> <br>
+                    <input type="email" placeholder="example@gmail.com" name="doctor_email" size="36" required> <br>
+                    <input type="text" placeholder="Depertment" name="doctor_dept" size="36" required> <br>
+                    <input type="text" placeholder="Chamber" name="doctor_chamber" size="36" required> <br>
                     <button style="margin: 15px 145px; padding: 5px 20px;" type="submit" class="btn btn-secondary btn-sm">Submit</button>
                 </div>
             </form>

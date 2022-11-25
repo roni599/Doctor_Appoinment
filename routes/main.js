@@ -8,6 +8,7 @@ const user = require('../src/model/user');
 const admin = require('../src/model/admin');
 const schedule = require('../src/model/schedule');
 const donor = require('../src/model/donor');
+const doctor = require('../src/model/doctor');
 
 
 
@@ -35,16 +36,17 @@ router.post('/send', (req, res) => {
     // let user_email = req.body.user_email;
     // let user_password = req.body.user_password;
     // let user_address = req.body.user_address;
-    const {user_name, user_phone, user_email, user_password, user_address} = req.body;
+    const {user_name, user_phone, user_email, user_password, user_address, doctor_name} = req.body;
 
-    console.log(user_name, user_phone, user_email, user_password, user_address);
+    //console.log(user_name, user_phone, user_email, user_password, user_address, doctor_name);
 
     const userInfo = new user({
         user_name,
         user_phone,
         user_email,
         user_password,
-        user_address
+        user_address,
+        doctor_name
     });
     userInfo.save((err) => {
         if(err){
@@ -353,4 +355,52 @@ router.get('/bloodDonorData',(req,res)=>{
 
 });
 
+
+
+
+//**** Doctor's part */
+
+//ROUTE TO SHOW DOCTOR REGISTRATION FORM
+router.get('/doctor',(req,res)=>{
+    res.render('admin/addDoctor');
+});
+
+
+//ROUTE TO COLLECT DOCTOR DATA FROM REGISTRATION FORM TO DATABASE
+
+router.post('/addDoctor', (req, res) => {
+
+    const {doctor_name, doctor_phone, doctor_email, doctor_dept, doctor_chamber} = req.body;
+
+
+    const doctorInfo = new doctor({
+        doctor_name, 
+        doctor_phone, 
+        doctor_email, 
+        doctor_dept, 
+        doctor_chamber
+    });
+    doctorInfo.save((err) => {
+        if(err){
+            console.log(err);
+        }
+        else{
+            console.log("Data save successfully");
+            res.redirect('/doctorlist');
+        }
+    });
+});
+
+//ROUTE TO SHOW DOCTOR DATA
+router.get('/doctorlist',(req,res)=>{
+    doctor.find((err, docs) => {
+        if(!err){
+            res.render('doctorList', {doctors: docs});
+        }
+        else{
+            console.log("Error 404 " + err)
+        }
+    });
+
+});
 module.exports = router;

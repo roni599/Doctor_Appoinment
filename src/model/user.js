@@ -29,7 +29,13 @@ let userSchema = new Schema({
         type: String,
         required: true,
         trim: true
-    }
+    },
+
+    doctor_name:{
+        type: String,
+        required: true,
+        trim: true
+    },
 });
 
 module.exports = mongoose.model('User', userSchema);
