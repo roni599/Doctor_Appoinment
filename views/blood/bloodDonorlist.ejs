@@ -29,6 +29,9 @@
                 <th scope="col">Contact</th>
                 <th scope="col">Blood Group</th>
                 <th scope="col">Address</th>
+                <th scope="col">Delete</th>
+                <th scope="col">Update</th>
+                <th scope="col">Schedule</th>
             </tr>
         </thead>
             <tbody>
@@ -38,6 +41,9 @@
                         <td><%- donor.donor_phone %></td>
                         <td><%- donor.blood_group %></td>
                         <td><%- donor.donor_address %></td>
+                        <td> <a href="/deletedonor/<%- donor._id %>"><i class="fa-regular fa-trash-can" style="color: red;"></i></a> </td>
+                        <td> <a href="/editdonor/<%- donor._id %>"><i class="fa-solid fa-pen-to-square" style="color: green;"></i></a> </td>
+                        <td> <a href="/scheduledonor/<%- donor._id %>"><i class="fa-regular fa-clock" style="color: blueviolet;"></i></a> </td>
                     </tr>
                 <% }); %>
             </tbody>

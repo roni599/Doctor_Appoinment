@@ -9,6 +9,7 @@ const admin = require('../src/model/admin');
 const schedule = require('../src/model/schedule');
 const donor = require('../src/model/donor');
 const doctor = require('../src/model/doctor');
+const bloodSchedule = require('../src/model/bloodSchedule');
 
 
 
@@ -165,7 +166,7 @@ router.get('/userdata',(req,res)=>{
             res.render('admin/userData', {users: docs});
         }
         else{
-            console.log("Error 404 " + err)
+            console.log("Error 404 ")
         }
     });
 
@@ -228,15 +229,22 @@ router.post('/search',async(req,res)=>{
             const userName = await user.findOne({user_name:name});
             res.send(userName);
 
-            // if(userName.user_name === name){
-            //     res.send(userName);    
-            // }
-            // else{
-            //     console.log("User not found");
-            // }
         } catch(error){
             console.log("Invalid Username" + error);
     }
+});
+
+//ROUTE TO SHOW Blood Donor DATA for USER
+router.get('/bloodDonorDataForUser',(req,res)=>{
+    donor.find((err, docs) => {
+        if(!err){
+            res.render('showDonorlist', {donors: docs});
+        }
+        else{
+            console.log("Error 404 " + err)
+        }
+    });
+
 });
 
 
@@ -302,7 +310,7 @@ router.get('/schedule',(req,res)=>{
 
 //**** Blood part ****/
 router.get('/bloodDonorReg',(req,res)=>{
-    res.render('bloodDonorReg');
+    res.render('blood/bloodDonorReg');
 });
 
 
@@ -325,28 +333,17 @@ router.post('/sendDonorInfo', (req, res) => {
         }
         else{
             console.log("Data save successfully");
-            res.redirect('/success');
+            res.redirect('/userhomepage');
         }
     });
 });
 
 
-//ROUTE TO SHOW SUCCESS MSG(REGISTRATION) FOR Donor
-router.get('/success', (req, res)=> {
-    res.render('msg/successMSG');
-});
-
-
-//ROUTE TO SHOW ERROR MSG(REGISTRATION) FOR Donor
-router.get('/error', (req, res)=> {
-    res.render('msg/errorMSG');
-});
-
 //ROUTE TO SHOW Blood Donor DATA
 router.get('/bloodDonorData',(req,res)=>{
     donor.find((err, docs) => {
         if(!err){
-            res.render('bloodDonorlist', {donors: docs});
+            res.render('blood/bloodDonorlist', {donors: docs});
         }
         else{
             console.log("Error 404 " + err)
@@ -355,6 +352,97 @@ router.get('/bloodDonorData',(req,res)=>{
 
 });
 
+//ROUTE TO SHOW DONOR DATA FOR UPDATE
+router.get('/editdonor/:id',(req,res)=>{
+    console.log(req.params.id);
+    donor.findOneAndUpdate({_id: req.params.id}, req.body, {new:true}, (err, docs) => {
+        if(err){
+            console.log("Data can't edit because of some error");
+        }
+        else{
+            res.render('admin/bloodInfo', {donor: docs});
+        }
+    });
+});
+
+
+//ROUTE TO UPDATE DONOR DATA AND SUBMIT
+router.post('/editdonor/:id',(req,res)=>{
+    console.log(req.params.id);
+    donor.findByIdAndUpdate({_id: req.params.id}, req.body, (err, docs) => {
+        if(err){
+            console.log("Data can't update because of some error");
+        }
+        else{
+            res.redirect('/updatemsg');
+        }
+    });
+});
+
+
+//ROUTE TO DELETE DONOR DATA
+router.get('/deletedonor/:id',(req,res)=>{
+    console.log(req.params.id);
+    donor.findByIdAndDelete({_id: req.params.id}, (err, docs) => {
+        if(err){
+            console.log("Data can't deleted because of some error");
+        }
+        else{
+            console.log("Delete successfully");
+            res.redirect('/bloodDonorData');
+        }
+    });
+});
+
+
+//****Blood donor Schedule ****/
+//ROUTE TO SHOW USER DATA and Set the blood donor schedule
+router.get('/scheduledonor/:id',(req,res)=>{
+    console.log(req.params.id);
+    donor.findOneAndUpdate({_id: req.params.id}, req.body, {new:true}, (err, docs) => {
+        if(err){
+            console.log("Data can't edit because of some error");
+        }
+        else{
+            res.render('blood/bloodScheduleForm', {donor: docs});
+        }
+    });
+});
+
+
+//ROUTE TO COLLECT DONOR SCHEDULE DATA FROM SCHEDULE FORM TO DATABASE
+router.post('/addDonorSchedule', (req, res) => {
+    const {donor_name, hospital_address,  date, time} = req.body;
+
+    const donorScheduleInfo = new bloodSchedule({
+        donor_name, 
+        hospital_address, 
+        date, 
+        time
+    });
+    donorScheduleInfo.save((err) => {
+        if(err){
+            console.log(err);
+        }
+        else{
+            console.log("Data save successfully");
+            res.redirect('/scheduledonor');
+        }
+    });
+});
+
+
+//ROUTE TO SHOW SCHEDULE INFORMATION
+router.get('/scheduledonor',(req,res)=>{
+    bloodSchedule.find((err, docs) => {
+        if(!err){
+            res.render('blood/bloodSchedule', {donorschedules: docs});
+        }
+        else{
+            console.log("Error 404 " + err)
+        }
+    });
+});
 
 
 
