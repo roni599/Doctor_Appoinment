@@ -41,7 +41,13 @@
                     <input type="email" placeholder="example@gmail.com" name="user_email" size="36" required> <br>
                     <input type="password" placeholder="Password" name="user_password" size="36" required> <br>
                     <input type="text" placeholder="Address" name="user_address" size="36" required> <br>
-                    <input type="text" placeholder="Doctor Name" name="doctor_name" size="36" required> <br>
+                    <select class="form-select" aria-label="Default select example" name="doctor_name">
+                        <option selected disabled>Doctor Name</option>
+                        <option value="Dr. K">Dr. K</option>
+                        <option value="Dr. Rijan">Dr. Rijan</option>
+                        <option value="Dr. Simon">Dr. Simon</option>
+                    </select>
+
                     <button style="margin: 15px 145px; padding: 5px 20px;" type="submit" class="btn btn-secondary btn-sm">Submit</button>
                 </div>
             </form>

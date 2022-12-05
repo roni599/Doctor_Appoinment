@@ -36,7 +36,8 @@
             <form action="/add" method="post">
                 <div class="reg-Form">
                     <h3 style="text-align: center; padding-top: 10px;"> <u>Patient Schedule</u></h3>
-                    <input type="text" placeholder="Username" name="user_name" size="36" value="<%- user.user_name %>"> <br>
+                        <input type="text" placeholder="Patient ID" name="p_id" value="<%- user._id %>" hidden> <br>
+                        <input type="text" placeholder="Username" name="user_name" size="36" value="<%- user.user_name %>"> <br>
                         <input type="text" placeholder="Doctor's Name" name="doctor_name" size="36"> <br>
                         <input type="text" placeholder="Hospital Name" name="hospital" size="36"> <br>
                         <input type="text" placeholder="Doctor's Contact" name="doctor_contact" size="36"> <br>
